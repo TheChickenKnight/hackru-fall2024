@@ -1,5 +1,4 @@
 "use client"
-import Image from "next/image";
 
 import { useState } from "react";
 
@@ -43,16 +42,16 @@ import { useState } from "react";
             Select your mood 
           </option>
           <option className="text-black" value="Happy">
-            Happy
+            Happy 😊
           </option>
           <option className="text-black" value="Sad">
-            Sad
+            Sad 😔
           </option>
           <option className="text-black" value="Angry">
-            Angry
+            Angry 😠
           </option>
           <option className="text-black" value="Neutral">
-            Neutral
+            Neutral 😐
           </option>
               </select>
           
