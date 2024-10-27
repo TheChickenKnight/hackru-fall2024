@@ -6,22 +6,28 @@ export async function GET(request) {
     const username = request.nextUrl.searchParams.get('username');
     const password = request.nextUrl.searchParams.get('password');
     let rec = {};
+
     try {
+        await client.connect();
         const db = client.db("Alzaid");
         const users = db.collection("users");
         rec = await users.findOne({ username });
+
         if (!rec) {
-            rec.code = 200;
-        } else if (rec.password != password) {
-            rec.code = 250;
+            rec = { code: 200, message: "Username does not match our records" };
+        } else if (rec.password !== password) {
+            rec = { code: 250, message: "Password was wrong or typed incorrectly" };
         } else {
-            rec.code = 100;
+            rec = { code: 100, message: "Signed in successfully" };
             cookies().set("username", username);
         }
-    } catch {
-        rec.code = 500;
+    } catch (error) {
+        rec = { code: 500, message: "Internal Server Error" };
     } finally {
-        client.close();
+        await client.close();
     }
-    return Response.json(rec);
+
+    return new Response(JSON.stringify(rec), {
+        headers: { 'Content-Type': 'application/json' }
+    });
 }

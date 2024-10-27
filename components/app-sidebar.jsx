@@ -1,8 +1,9 @@
+"use client"
+import { useEffect, useState } from "react";
 import { Sidebar, SidebarContent, SidebarFooter, SidebarGroup, SidebarGroupAction, SidebarGroupContent, SidebarGroupLabel, SidebarMenu, SidebarMenuButton, SidebarMenuItem } from "@/components/ui/sidebar"
 import { DropdownMenu, DropdownMenuItem, DropdownMenuContent, DropdownMenuTrigger } from "./ui/dropdown-menu";
 import { ChevronUp, Plus, User2 } from "lucide-react";
 import Link from "next/link";
-import { cookies } from "next/headers";
 import {
   AlertDialog,
   AlertDialogAction,
@@ -43,11 +44,7 @@ const items = [
   }
 ];
 
-export function AppSidebar() {
-  let username; 
-  (async () => {
-    username = (await cookies()).get("username").value;
-  })();
+export function AppSidebar({ username }) {
   return (
     <Sidebar>
       <SidebarContent>

@@ -1,0 +1,49 @@
+body {
+    font-family: 'Arial', sans-serif;
+    background: linear-gradient(135deg, #f5f7fa, #c3cfe2);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+}
+
+.auth-container {
+    max-width: 400px;
+    width: 100%;
+    padding: 20px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+    background-color: #fff;
+}
+
+.card {
+    border: none;
+}
+
+.card-header {
+    text-align: center;
+}
+
+.card-title {
+    font-size: 24px;
+    font-weight: bold;
+}
+
+.card-description {
+    font-size: 14px;
+    color: #666;
+}
+
+.button {
+    width: 100%;
+    margin-top: 20px;
+}
+
+.button-link {
+    display: block;
+    margin-top: 10px;
+    text-align: center;
+    color: #007bff;
+    cursor: pointer;
+}

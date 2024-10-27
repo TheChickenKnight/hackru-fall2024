@@ -8,9 +8,9 @@ import moment from 'moment';
 import 'react-datepicker/dist/react-datepicker.css';
 import 'react-big-calendar/lib/css/react-big-calendar.css';
 import './style.css';
-import './customCalendarStyles.css'; // Import the custom styles
-import CustomToolbar from './CustomToolbar'; // Adjust the import path as necessary
-import brainLogo from './brain.png'; // Adjust the import path as necessary
+import './customCalendarStyles.css'; 
+import CustomToolbar from './CustomToolbar'; 
+import brainLogo from './brain.png'; 
 import Image from 'next/image';
 
 const localizer = momentLocalizer(moment);
@@ -53,7 +53,7 @@ const UsersPage = () => {
   return (
     <div className="container">
       <header className="header">
-        <Image width="50" height="50" src={brainLogo.src} alt="Brain Logo" className="logo" />
+        <Image width="50" height="50" src={brainLogo} alt="Brain Logo" className="logo" />
         <h1 className="title">AlzAid</h1>
       </header>
       <h2 className="subtitle">Reminders</h2>

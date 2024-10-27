@@ -1,23 +1,32 @@
 import { MongoClient } from "mongodb";
+import { cookies } from "next/headers";
 
 export async function GET(request) {
     const client = new MongoClient(process.env.MONGO);
     const username = request.nextUrl.searchParams.get('username');
     const password = request.nextUrl.searchParams.get('password');
     let rec = {};
-    try {   
+
+    try {
+        await client.connect();
         const db = client.db("Alzaid");
         const users = db.collection("users");
         rec = await users.findOne({ username });
+
         if (!rec) {
-            users.insertOne({username, password});
-            rec.code = 100;
-        } else  
-            rec.code = 200;
-    } catch {
-        rec.code = 500;
+            await users.insertOne({ username, password });
+            rec = { code: 100, message: "User created successfully" };
+            cookies().set("username", username);
+        } else {
+            rec = { code: 200, message: "Username already exists" };
+        }
+    } catch (error) {
+        rec = { code: 500, message: "Internal Server Error" };
     } finally {
-        client.close();
+        await client.close();
     }
-    return Response.json(rec);
+
+    return new Response(JSON.stringify(rec), {
+        headers: { 'Content-Type': 'application/json' }
+    });
 }
