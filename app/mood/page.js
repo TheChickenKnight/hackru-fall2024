@@ -30,9 +30,8 @@ import { useState } from "react";
           }
         };
 
-        return (
-          <div className="flex justify-center items-center h-screen bg-black">
-            <div className="bg-purple-100 p-5 rounded-lg shadow-lg">
+        return (  
+            <div className="bg-purple-100 p-5 rounded-lg shadow-lg mt-20">
               <h1 className="text-black text-2xl mb-4">Mood Tracker</h1>
 
               <select
@@ -41,7 +40,7 @@ import { useState } from "react";
           onChange={(e) => setSelectedMood(e.target.value)}
               >
           <option className="text-black" value="">
-            Select your mood
+            Select your mood 
           </option>
           <option className="text-black" value="Happy">
             Happy
@@ -56,10 +55,11 @@ import { useState } from "react";
             Neutral
           </option>
               </select>
-
+          
               <button
-          className={`text-black bg-gray-200 p-2 rounded hover:bg-gray-300 ${getMoodColorClass(selectedMood)}`}
+          className={`text-black bg-gray-200 p-2 rounded ${selectedMood ? 'hover:bg-gray-300' : ''} ${getMoodColorClass(selectedMood)}`}
           onClick={handleAddMood}
+          disabled={!selectedMood}
               >
           Log Mood
               </button>
@@ -67,33 +67,40 @@ import { useState } from "react";
               <h2 className="text-black text-lg mt-4">Mood History</h2>
 
               {moods.map((mood, index) => (
-          <div key={index} className="relative flex items-center">
-            <li
-              className={`p-2 mb-2 rounded-lg shadow-md ${getMoodColorClass(mood.mood)} hover:bg-opacity-75 flex-grow`}
+          <div key={index} className="relative flex flex-col items-start mb-2">
+            <div
+              className={`p-2 rounded-lg shadow-md ${getMoodColorClass(mood.mood)} hover:bg-opacity-75 w-full`}
               style={{ backgroundColor: 'rgba(255, 255, 255, 0.1)' }}
               onClick={() => {
-                const updatedMoods = [...moods];
-                updatedMoods[index].showDescription = !updatedMoods[index].showDescription;
-                setMoods(updatedMoods);
+          const updatedMoods = [...moods];
+          updatedMoods[index].showDescription = !updatedMoods[index].showDescription;
+          setMoods(updatedMoods);
+          if (!updatedMoods[index].showDescription) {
+            setTimeout(() => {
+              document.getElementById(`description-${index}`).focus();
+            }, 0);
+          }
               }}
             >
               {mood.time} - {mood.mood}
-            </li>
+            </div>
             <button
               className="ml-2 text-red-500 hover:text-red-700"
               onClick={() => {
-                const updatedMoods = moods.filter((_, i) => i !== index);
-                setMoods(updatedMoods);
+          const updatedMoods = moods.filter((_, i) => i !== index);
+          setMoods(updatedMoods);
               }}
             >
               Remove
             </button>
             {mood.showDescription && (
-              <div className="absolute bg-white p-2 rounded shadow-lg mt-2">
-                <textarea
-            className="w-full p-2 border border-black-300 rounded text-black"
+              <div className="absolute bg-white p-2 rounded shadow-lg mt-10 z-10 w-flex resizable draggable" style={{ maxWidth: '90%' }}>
+          <textarea
+            id={`description-${index}`}
+            className="w-full p-2 border border-black-300 rounded text-black resize"
             placeholder="Write more about your emotions..."
             rows="3"
+            autoFocus
             onBlur={() => {
               const updatedMoods = [...moods];
               updatedMoods[index].showDescription = false;
@@ -105,13 +112,11 @@ import { useState } from "react";
               setMoods(updatedMoods);
             }}
             value={mood.description || ""}
-                />
+          />
               </div>
             )}
           </div>
               ))}
-
             </div>   
-          </div>
         );
       }
