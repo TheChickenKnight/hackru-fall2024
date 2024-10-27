@@ -1,6 +1,6 @@
 'use client'
 import React, {useState} from 'react';
-import FlashcardList from './flashcardlist';
+import FlashcardList from './FlashcardList';
 import './app.css'
 
 function App(){
