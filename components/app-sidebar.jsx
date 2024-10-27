@@ -45,6 +45,16 @@ const items = [
 ];
 
 export function AppSidebar({ username }) {
+  const [notes, setNotes] = useState([]);
+  const [newNote, setNewNote] = useState("");
+
+  const handleAddNote = () => {
+    if (newNote.trim()) {
+      setNotes([...notes, newNote]);
+      setNewNote("");
+    }
+  };
+
   return (
     <Sidebar>
       <SidebarContent>
@@ -75,13 +85,32 @@ export function AppSidebar({ username }) {
         </SidebarGroup>
         <SidebarGroup>
           <SidebarGroupLabel>Notes</SidebarGroupLabel>
-          <SidebarGroupAction title="Add Note">
+          <SidebarGroupAction title="Add Note" onClick={handleAddNote}>
               <Plus/> <span className="sr-only">Add Note</span>
           </SidebarGroupAction>
           <SidebarGroupContent>
-                {
-                  //database stuff goes brr
-                }
+            <div className="p-2">
+              <input
+                type="text"
+                value={newNote}
+                onChange={(e) => setNewNote(e.target.value)}
+                placeholder="Write a note..."
+                className="w-full p-2 border rounded mb-2"
+              />
+              <button
+                onClick={handleAddNote}
+                className="w-full bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 transition"
+              >
+                Add Note
+              </button>
+            </div>
+            <div className="p-2">
+              {notes.map((note, index) => (
+                <div key={index} className="p-2 border-b">
+                  {note}
+                </div>
+              ))}
+            </div>
           </SidebarGroupContent>
         </SidebarGroup>
       </SidebarContent>
