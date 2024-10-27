@@ -2,7 +2,6 @@ import { Sidebar, SidebarContent, SidebarFooter, SidebarGroup, SidebarGroupActio
 import { DropdownMenu, DropdownMenuItem, DropdownMenuContent, DropdownMenuTrigger } from "./ui/dropdown-menu";
 import { ChevronUp, Plus, User2 } from "lucide-react";
 import Link from "next/link";
-import { cookies } from "next/headers";
 import {
   AlertDialog,
   AlertDialogAction,
@@ -14,6 +13,7 @@ import {
   AlertDialogTitle,
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog"
+import { cookies } from "next/headers";
 
 const items = [
   {
@@ -43,11 +43,9 @@ const items = [
   }
 ];
 
-export function AppSidebar() {
-  let username; 
-  (async () => {
-    username = (await cookies()).get("username").value;
-  })();
+export async function AppSidebar() {
+  const cookie = await cookies();
+  let username = cookie.get('username').value;
   return (
     <Sidebar>
       <SidebarContent>

@@ -29,7 +29,7 @@ export default function RootLayout({ children }) {
       <SidebarProvider>
         <AppSidebar/>
         <SidebarTrigger/>
-        <div className='flex-1 p-4 bg-lavender'>{children}</div>
+          <div className='flex-1 p-4 bg-lavender'>{children}</div>
         <Toaster/>
       </SidebarProvider>
       </body>
