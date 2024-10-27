@@ -53,7 +53,7 @@ const UsersPage = () => {
   return (
     <div className="container">
       <header className="header">
-        <Image src={brainLogo.src} alt="Brain Logo" className="logo" />
+        <Image width="50" height="50" src={brainLogo.src} alt="Brain Logo" className="logo" />
         <h1 className="title">AlzAid</h1>
       </header>
       <h2 className="subtitle">Reminders</h2>

@@ -105,38 +105,40 @@ export function AppSidebar() {
                   <DropdownMenuItem>
                     <span>Account</span>
                   </DropdownMenuItem>
-                  <DropdownMenuItem>
-                    {
-                      username ? 
-                      (
-                        <AlertDialog>
-                          <AlertDialogTrigger asChild>
-                            <Link href="/signout"><span>Sign Out</span></Link>
-                          </AlertDialogTrigger>
-                          <AlertDialogContent>
-                              <AlertDialogHeader>
-                                  <AlertDialogTitle>Are you absolutely sure?</AlertDialogTitle>
-                                  <AlertDialogDescription>
-                                      This action cannot be undone. This will permanently delete your account
-                                      and remove your data from our servers.
-                                  </AlertDialogDescription>
-                              </AlertDialogHeader>
-                              <AlertDialogFooter>
-                                  <AlertDialogCancel onClick={() => {
+                  <Link href={username ? "/signout" : "/signin"}>
+                    <DropdownMenuItem>
+                      {
+                        username ? 
+                        (
+                          <AlertDialog>
+                            <AlertDialogTrigger asChild>
+                              <span>Sign Out</span>
+                            </AlertDialogTrigger>
+                            <AlertDialogContent>
+                                <AlertDialogHeader>
+                                    <AlertDialogTitle>Are you absolutely sure?</AlertDialogTitle>
+                                    <AlertDialogDescription>
+                                        This action cannot be undone. This will permanently delete your account
+                                        and remove your data from our servers.
+                                    </AlertDialogDescription>
+                                </AlertDialogHeader>
+                                <AlertDialogFooter>
+                                    <AlertDialogCancel onClick={() => {
 
-                                  }}>Cancel</AlertDialogCancel>
-                                  <AlertDialogAction onClick={() => {
+                                    }}>Cancel</AlertDialogCancel>
+                                    <AlertDialogAction onClick={() => {
 
-                                  }}>Continue</AlertDialogAction>
-                              </AlertDialogFooter>
-                          </AlertDialogContent>
-                        </AlertDialog>
-                      ) 
-                      : (
-                        <Link href="/signin"><span>Sign in</span></Link>
-                      )
-                    }
-                  </DropdownMenuItem>
+                                    }}>Continue</AlertDialogAction>
+                                </AlertDialogFooter>
+                            </AlertDialogContent>
+                          </AlertDialog>
+                        ) 
+                        : (
+                          <span>Sign in</span>
+                        )
+                      }
+                    </DropdownMenuItem>
+                  </Link>
                 </DropdownMenuContent>
               </DropdownMenu>
             </SidebarMenuItem>
