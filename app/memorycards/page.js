@@ -4,7 +4,7 @@ import FlashcardList from '../../components/cards/FlashcardList';
 import './app.css'
 
 function App(){
-    const [flashcard, setflashcards] = useState(SAMPLE_FLASHCARDS)
+    const [flashcard] = useState(SAMPLE_FLASHCARDS)
 
     // useEffect(() =>{
 

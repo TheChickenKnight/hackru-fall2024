@@ -11,6 +11,7 @@ import './style.css';
 import './customCalendarStyles.css'; // Import the custom styles
 import CustomToolbar from './CustomToolbar'; // Adjust the import path as necessary
 import brainLogo from './brain.png'; // Adjust the import path as necessary
+import Image from 'next/image';
 
 const localizer = momentLocalizer(moment);
 
@@ -52,7 +53,7 @@ const UsersPage = () => {
   return (
     <div className="container">
       <header className="header">
-        <img src={brainLogo.src} alt="Brain Logo" className="logo" />
+        <Image src={brainLogo.src} alt="Brain Logo" className="logo" />
         <h1 className="title">AlzAid</h1>
       </header>
       <h2 className="subtitle">Reminders</h2>
@@ -106,7 +107,7 @@ const UsersPage = () => {
             toolbar: CustomToolbar,
           }}
           defaultDate={currentDate}
-          eventPropGetter={(event) => ({
+          eventPropGetter={() => ({
             style: {
               backgroundColor: '#3174ad', // Customize the background color
               color: 'white', // Customize the text color
