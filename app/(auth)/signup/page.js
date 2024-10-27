@@ -8,6 +8,7 @@ import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { useToast } from "@/hooks/use-toast";
+import { ToastAction } from "@/components/ui/toast";
 import { useRouter } from "next/navigation";
  
 const formSchema = z.object({
@@ -21,9 +22,9 @@ const formSchema = z.object({
         .regex(/^(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+=]).*$/, {message:"Password must include one uppercase, lowercase, and special character."}) 
 })
 
-export default function SignIn() {
-    const { toast } = useToast();
+export default function SignUp() {
     const router = useRouter();
+    const { toast } = useToast();
     const form = useForm({
         resolver: zodResolver(formSchema),
         defaultValues: {
@@ -32,26 +33,25 @@ export default function SignIn() {
         }
     });
     async function onSubmit(values) {
-       let bleh = await fetch("/api/sign/in?username=" + encodeURIComponent(values.username) + "&password=" + encodeURIComponent(values.password));
-       switch(JSON.parse(await bleh.text()).code) {
-            case 200:
-                toast({title: "Incorrect details :(", variant: "destructive", description: "The username " + values.username + " does not match our records"})
-            break;
-            case 250:
-                toast({title: "Incorrect password :(", variant: "destructive", description: "Password was wrong or typed incorrectly"});
-            break;
-            case 100:
-                toast({title: "Signed in!", description: "Signed in as " + values.username + "!"});
-            break;
-            case 500:
-                toast({title: "INTERNAL SERVER ERROR", variant: "destructive"});
-            break;
-       }
-    }
+        let res = await (await fetch("/api/sign/up?username=" + encodeURIComponent(values.username) + "&password=" + encodeURIComponent(values.password))).text();
+        alert(res);
+        res = JSON.parse(res);
+        switch(res.code) {
+             case 200:
+                 toast({title: "Sign in failed", variant: "destructive", description: "Someone with the username " + values.username + " already exists", action: <ToastAction altText="sign in" onClick={()=>{router.push("/signin")}}>Sign in?</ToastAction>})
+             break;
+             case 100:
+                 toast({title: "Signed in!", description: "Signed in as " + values.username + "!"});
+             break;
+             case 500:
+                 toast({title: "INTERNAL SERVER ERROR", variant: "destructive"});
+             break;
+        }
+     }
     return (
         <Card>
             <CardHeader>
-                <CardTitle>Sign in</CardTitle>
+                <CardTitle>Sign Up</CardTitle>
                 <CardDescription>description</CardDescription>
             </CardHeader>
             <CardContent>
@@ -86,8 +86,8 @@ export default function SignIn() {
                                 </FormItem>
                             )}
                         />
-                        <Button type="submit">Submit</Button>
-                        <Button onClick={()=>{router.push('/signup')}} className='ml-8'>Sign up instead</Button>
+                        <Button type="submit">Sign up</Button>
+                        <Button onClick={()=>{router.push('/signin')}} className='ml-8'>Sign in instead</Button>
                     </form>
                 </Form>
             </CardContent>

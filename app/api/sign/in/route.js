@@ -11,15 +11,19 @@ export async function GET(request) {
         const users = db.collection("users");
         rec = await users.findOne({ username });
         if (!rec) {
-            rec.code = 200;
+            rec = {
+                code: 200
+            };
         } else if (rec.password != password) {
             rec.code = 250;
         } else {
             rec.code = 100;
-            cookies().set("username", username);
+            (await cookies()).set("username", username);
         }
     } catch {
-        rec.code = 500;
+        rec = {
+            code: 500
+        };
     } finally {
         client.close();
     }

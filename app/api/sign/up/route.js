@@ -1,4 +1,5 @@
 import { MongoClient } from "mongodb";
+import { cookies } from "next/headers";
 
 export async function GET(request) {
     const client = new MongoClient(process.env.MONGO);
@@ -10,12 +11,17 @@ export async function GET(request) {
         const users = db.collection("users");
         rec = await users.findOne({ username });
         if (!rec) {
-            users.insertOne({username, password});
-            rec.code = 100;
-        } else  
+            rec = {
+                code: 100,
+            };
+            await users.insertOne({username, password});
+            (await cookies()).set("username", username);
+        } else 
             rec.code = 200;
     } catch {
-        rec.code = 500;
+        rec = {
+            code: 500,
+        };    
     } finally {
         client.close();
     }
