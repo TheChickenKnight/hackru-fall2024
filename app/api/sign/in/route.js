@@ -6,10 +6,13 @@ export async function GET(request) {
     const username = request.nextUrl.searchParams.get('username');
     const password = request.nextUrl.searchParams.get('password');
     let rec = {};
+
     try {
+        await client.connect();
         const db = client.db("Alzaid");
         const users = db.collection("users");
         rec = await users.findOne({ username });
+
         if (!rec) {
             rec = {
                 code: 200
@@ -25,7 +28,10 @@ export async function GET(request) {
             code: 500
         };
     } finally {
-        client.close();
+        await client.close();
     }
-    return Response.json(rec);
+
+    return new Response(JSON.stringify(rec), {
+        headers: { 'Content-Type': 'application/json' }
+    });
 }

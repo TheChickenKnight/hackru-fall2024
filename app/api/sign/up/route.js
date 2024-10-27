@@ -1,15 +1,19 @@
 import { MongoClient } from "mongodb";
 import { cookies } from "next/headers";
+import { cookies } from "next/headers";
 
 export async function GET(request) {
     const client = new MongoClient(process.env.MONGO);
     const username = request.nextUrl.searchParams.get('username');
     const password = request.nextUrl.searchParams.get('password');
     let rec = {};
-    try {   
+
+    try {
+        await client.connect();
         const db = client.db("Alzaid");
         const users = db.collection("users");
         rec = await users.findOne({ username });
+
         if (!rec) {
             rec = {
                 code: 100,
@@ -23,7 +27,10 @@ export async function GET(request) {
             code: 500,
         };    
     } finally {
-        client.close();
+        await client.close();
     }
-    return Response.json(rec);
+
+    return new Response(JSON.stringify(rec), {
+        headers: { 'Content-Type': 'application/json' }
+    });
 }

@@ -1,133 +1,79 @@
 'use client'
-import React, {useState} from 'react';
-import FlashcardList from '../../components/cards/FlashcardList';
-import './app.css'
+import React, { useState } from 'react';
+import { useSwipeable } from 'react-swipeable';
+import './app.css';
 
-function App(){
-    const [flashcard] = useState(SAMPLE_FLASHCARDS)
+function App() {
+    const [memoryCards, setMemoryCards] = useState(SAMPLE_MEMORY_CARDS);
+    const [newMemory, setNewMemory] = useState({ photo: '', message: '', audio: '' });
 
-    // useEffect(() =>{
+    const handleInputChange = (e) => {
+        const { name, value } = e.target;
+        setNewMemory({ ...newMemory, [name]: value });
+    };
 
-    // },[]
-    // )
-    return(
-        <div className = "container">
-             <FlashcardList flashcards={flashcard}/>
+    const handleAddMemory = () => {
+        setMemoryCards([...memoryCards, { ...newMemory, id: memoryCards.length + 1 }]);
+        setNewMemory({ photo: '', message: '', audio: '' });
+    };
+
+    const handlers = useSwipeable({
+        onSwipedLeft: () => console.log('Swiped left'),
+        onSwipedRight: () => console.log('Swiped right'),
+    });
+
+    return (
+        <div className="container">
+            <div className="form">
+                <input
+                    type="text"
+                    name="photo"
+                    placeholder="Photo URL"
+                    value={newMemory.photo}
+                    onChange={handleInputChange}
+                />
+                <input
+                    type="text"
+                    name="message"
+                    placeholder="Message"
+                    value={newMemory.message}
+                    onChange={handleInputChange}
+                />
+                <input
+                    type="text"
+                    name="audio"
+                    placeholder="Audio URL"
+                    value={newMemory.audio}
+                    onChange={handleInputChange}
+                />
+                <button onClick={handleAddMemory}>Add Memory</button>
+            </div>
+            <div className="memory-cards" {...handlers}>
+                {memoryCards.map((card) => (
+                    <div key={card.id} className="memory-card">
+                        {card.photo && <img src={card.photo} alt="Memory" />}
+                        {card.message && <p>{card.message}</p>}
+                        {card.audio && <audio controls src={card.audio}></audio>}
+                    </div>
+                ))}
+            </div>
         </div>
-       
     );
 }
-const SAMPLE_FLASHCARDS = [
+
+const SAMPLE_MEMORY_CARDS = [
     {
         id: 1,
-        question: 'question1',
-        answer: 'a1',
-        options: [
-            'a1',
-            'b1',
-            'c1',
-            'd1'
-        ]
+        photo: 'https://via.placeholder.com/150',
+        message: 'This is a cherished memory.',
+        audio: '',
     },
     {
         id: 2,
-        question: 'question2',
-        answer: 'a2',
-        options: [
-            'a2',
-            'b2',
-            'c2',
-            'd2'
-        ]
+        photo: '',
+        message: 'Another cherished memory.',
+        audio: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3',
     },
-    {
-        id: 3,
-        question: 'question3',
-        answer: 'a3',
-        options: [
-            'a3',
-            'b3',
-            'c3',
-            'd3'
-        ]
-    },
-    {
-        id: 4,
-        question: 'question4',
-        answer: 'a4',
-        options: [
-            'a4',
-            'b4',
-            'c4',
-            'd4'
-        ]
-    },
-    {
-        id: 5,
-        question: 'question5',
-        answer: 'a5',
-        options: [
-            'a5',
-            'b5',
-            'c5',
-            'd5'
-        ]
-    },
-    {
-        id: 6,
-        question: 'question6',
-        answer: 'a6',
-        options: [
-            'a6',
-            'b6',
-            'c6',
-            'd6'
-        ]
-    },
-    {
-        id: 7,
-        question: 'question7',
-        answer: 'a7',
-        options: [
-            'a7',
-            'b7',
-            'c7',
-            'd7'
-        ]
-    },
-    {
-        id: 8,
-        question: 'question8',
-        answer: 'a8',
-        options: [
-            'a8',
-            'b8',
-            'c8',
-            'd8'
-        ]
-    },
-    {
-        id: 9,
-        question: 'question9',
-        answer: 'a9',
-        options: [
-            'a9',
-            'b9',
-            'c9',
-            'd9'
-        ]
-    },
-    {
-        id: 10,
-        question: 'question10',
-        answer: 'a10',
-        options: [
-            'a10',
-            'b10',
-            'c10',
-            'd10'
-        ]
-    }
-]
+];
 
 export default App;
