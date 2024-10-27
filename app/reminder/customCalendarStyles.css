@@ -1,0 +1,33 @@
+/* customCalendarStyles.css */
+.rbc-month-view .rbc-date-cell {
+    color: black; /* Change the color of the date numbers in month view */
+}
+
+.rbc-month-view .rbc-off-range {
+    color: gray; /* Change the color of the dates that are not in the current month */
+}
+
+.rbc-time-view .rbc-time-header-cell {
+    color: black; /* Change the color of the date numbers in week and day view */
+}
+
+.rbc-time-view .rbc-time-header-gutter {
+    color: black; /* Change the color of the time gutter in week and day view */
+}
+
+.rbc-time-view .rbc-time-content {
+    color: black; /* Change the color of the time content in week and day view */
+}
+
+.rbc-toolbar-label {
+    color: black; /* Change the color of the month name in the toolbar */
+}
+
+.rbc-time-view .rbc-current-time-indicator {
+    background-color: green !important; /* Change the color of the current time indicator line */
+    height: 2px !important; /* Adjust the thickness of the line if needed */
+    z-index: 10 !important; /* Ensure the line is on top of other elements */
+    border: none !important; /* Ensure no border is applied */
+    position: absolute !important; /* Ensure the position is absolute */
+    width: 100% !important; /* Ensure the line spans the entire width */
+}
