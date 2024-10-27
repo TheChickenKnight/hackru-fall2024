@@ -1,7 +1,6 @@
 "use client"
 import Image from 'next/image';
 import { useEffect } from 'react';
-import { motion } from 'framer-motion';
 
 export default function App() {
   useEffect(() => {
@@ -10,15 +9,9 @@ export default function App() {
 
   return (
     <div className="min-h-screen flex flex-col items-center justify-center p-8 sm:p-20 font-sans">
-      <motion.div
-        animate={{ rotate: 360 }}
-        transition={{ duration: 10, repeat: Infinity, ease: "linear" }}
-        className="mb-8"
-      >
-        <Image src="/logo.png" alt="Logo" width={300} height={300} />
-      </motion.div>
+      <Image src="/logo.png" alt="Logo" width={300} height={300} />
       <h1 className="text-6xl sm:text-8xl text-gray-800 font-bold mb-8">
-        Alzheimer&apos;s and Dyslexia: AlzAid
+        Alzheimer&apos;s Disease tools: AlzAid
       </h1>
       <div className="text-gray-700 flex gap-4 items-center flex-col sm:flex-row">
         <button className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 transition">

@@ -46,13 +46,12 @@ export default function SignIn() {
                     break;
                 case 100:
                     toast({ title: "Signed in successfully :)", description: `Welcome back, ${values.username}!` });
-                    // Redirect or perform any other action upon successful sign-in
                     break;
                 default:
                     toast({ title: "Error", variant: "destructive", description: "An unexpected error occurred. Please try again." });
                     break;
             }
-        } catch (error) {
+        } catch {
             toast({ title: "Error", variant: "destructive", description: "An error occurred while signing in. Please try again." });
         }
     }
@@ -85,13 +84,12 @@ export default function SignIn() {
                                     <FormLabel>Password</FormLabel>
                                     <FormControl>
                                         <Input type="password" {...field} />
-                                        <Input type="password" {...field} />
                                     </FormControl>
                                     <FormMessage />
                                 </FormItem>
                             )}
                         />
-                        <Button type="submit">Submit</Button>
+                        <Button type="submit" className="mt-4">Submit</Button>
                         <Button onClick={()=>{router.push('/signup')}} className='ml-8'>Sign up instead</Button>
                     </form>
                 </Form>
