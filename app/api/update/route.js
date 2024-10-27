@@ -1,10 +1,10 @@
 import { MongoClient } from "mongodb";
-import { cookies } from "next/headers";
 
 export async function GET(request) {
     const client = new MongoClient(process.env.MONGO);
     const username = request.nextUrl.searchParams.get('username');
-    const password = request.nextUrl.searchParams.get('password');
+    const key = request.nextUrl.searchParams.get('key');
+    const value = request.nextUrl.searchParams.get('value');
     let rec = {};
 
     try {
@@ -15,12 +15,16 @@ export async function GET(request) {
 
         if (!rec) {
             rec = {
-                code: 100,
+                code: 200,
             };
-            await users.insertOne({username, password});
-            (await cookies()).set("username", username);
-        } else 
+        } else {
             rec.code = 200;
+            await users.updateOne({
+                username
+            }, {
+                [key]: value,
+            });
+        }
     } catch {
         rec = {
             code: 500,

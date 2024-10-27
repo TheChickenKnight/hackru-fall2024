@@ -30,16 +30,6 @@ const items = [
     title: "Mood Tracker",
     url: "mood",
     icon: ""
-  },
-  {
-    title: "Memory Playlists",
-    url: "memoryplaylists",
-    icon: ""
-  },
-  {
-    title: "Caregiver Access",
-    url: "caregiveraccess",
-    icon: ""
   }
 ];
 
@@ -74,17 +64,6 @@ export async function AppSidebar() {
                 ))
               }
             </SidebarMenu>
-          </SidebarGroupContent>
-        </SidebarGroup>
-        <SidebarGroup>
-          <SidebarGroupLabel>Notes</SidebarGroupLabel>
-          <SidebarGroupAction title="Add Note">
-              <Plus/> <span className="sr-only">Add Note</span>
-          </SidebarGroupAction>
-          <SidebarGroupContent>
-                {
-                  //database stuff goes brr
-                }
           </SidebarGroupContent>
         </SidebarGroup>
       </SidebarContent>
