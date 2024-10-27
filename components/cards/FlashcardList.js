@@ -1,7 +1,7 @@
 "use client"
 
 import React from 'react'
-import Flashcard from './flashcard'
+import Flashcard from './Flashcard'
 
 export default function FlashcardList({flashcards}) {
   return (
